@@ -1,5 +1,6 @@
-# GitHub Template
-GitHub template for all my future GitHub repos
+# WebAssembly (WASM) Sandbox
+
+Playground to play around with WebAssembly (WASM) 🤹‍♂️.
 
 ## License Information
 
