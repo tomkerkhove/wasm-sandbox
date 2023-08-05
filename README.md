@@ -1,6 +1,6 @@
 # WebAssembly (WASM) Sandbox
 
-Playground to play around with WebAssembly (WASM) 🤹‍♂️.
+Playground to play around with WebAssembly (WASM) & [WebAssembly System Interface (WASI)](https://github.com/WebAssembly/Wasi) 🤹‍♂️.
 
 ## License Information
 
