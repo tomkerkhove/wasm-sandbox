@@ -38,6 +38,11 @@ namespace WebAssembly.Runtime
                 "Main",
                 Function.FromCallback(store, () => Console.WriteLine("Hello from C#!"))
             );
+            linker.Define(
+                "",
+                "Foo",
+                Function.FromCallback(store, () => Console.WriteLine("Hello from C#!"))
+            );
 
             var appInstance = linker.Instantiate(store, appModule);
             var action = appInstance.GetAction("Main");

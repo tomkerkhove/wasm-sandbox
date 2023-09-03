@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace WebAssembly.App
 {
@@ -17,6 +18,12 @@ namespace WebAssembly.App
             // }
 
             Console.WriteLine("Bye, bye!");
+        }
+        
+        public string Foo()
+        {
+            Console.WriteLine($"Hello, {RuntimeInformation.RuntimeIdentifier} {RuntimeInformation.OSArchitecture}!");
+            return "Hey, bye!";
         }
     }
 }
