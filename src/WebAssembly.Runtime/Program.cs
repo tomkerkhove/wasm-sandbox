@@ -8,9 +8,11 @@ namespace WebAssembly.Runtime
         {
             Console.WriteLine("Starting runtime!");
 
+            Console.WriteLine("Running official sample");
             RunOfficialSample();
             Console.WriteLine("Sample completed");
             
+            Console.WriteLine("Running .NET scenario");
             RunOwnApp();
             Console.WriteLine("Eureka!");
         }
@@ -21,31 +23,24 @@ namespace WebAssembly.Runtime
             engineConfig.WithDebugInfo(true);
             using var engine = new Engine();
             using var store = new Store(engine);
-            using var appModule = Module.FromFile(engine,
-                @"C:\Code\GitHub\wasm-sandbox\src\WebAssembly.App\bin\Debug\net7.0\WebAssembly.App.wasm");
-
+            using var appModule = Module.FromFile(engine, @"C:\Code\GitHub\wasm-sandbox\src\WebAssembly.App\bin\Debug\net7.0\WebAssembly.App.wasm");
+            
             var wasiConfiguration = new WasiConfiguration();
-            // IEnumerable<(string, string)> wasiEnvVars = new List<(string, string)>()
-            // {
-            //     { "foo", "bar" }
-            // };
-            // wasiConfiguration.WithEnvironmentVariables(wasiEnvVars);
+            // Customize access client app has:
+            // wasiConfiguration.WithEnvironmentVariable()
+            
             store.SetWasiConfiguration(wasiConfiguration);
+            
+            // Put limits on resources the client app gets access to:
+            //store.SetLimits();
+            
             using var linker = new Linker(engine);
             linker.DefineWasi();
-            linker.Define(
-                "",
-                "Main",
-                Function.FromCallback(store, () => Console.WriteLine("Hello from C#!"))
-            );
-            linker.Define(
-                "",
-                "Foo",
-                Function.FromCallback(store, () => Console.WriteLine("Hello from C#!"))
-            );
 
             var appInstance = linker.Instantiate(store, appModule);
-            var action = appInstance.GetAction("Main");
+            
+            // 💣 - It does not detect the function for now
+            var action = appInstance.GetAction("Hello");
             action();
         }
 
